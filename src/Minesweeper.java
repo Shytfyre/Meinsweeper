@@ -108,9 +108,9 @@ public class Minesweeper extends JFrame {
             }
         }
         if (win) {
-            statusLabel.setText("yayy! :)");
+            statusLabel.setText("yayy! \uD83E\uDD73");
         } else {
-            statusLabel.setText("womp womp :(");
+            statusLabel.setText("womp womp \uD83D\uDE2D \uD83D\uDC80 ");
         }
     }
 
@@ -152,13 +152,15 @@ public class Minesweeper extends JFrame {
         public void reveal() {
             if (isRevealed) return;
             isRevealed = true;
-            setEnabled(false);
+            setEnabled(true);
             if (isMine) {
                 setText("💣");
                 setBackground(Color.RED);
             } else if (adjacentMines > 0) {
                 setText(Integer.toString(adjacentMines));
                 setForeground(getColorForNumber(adjacentMines));
+                //setDisabledTextColor(Color.RED);
+
             } else {
                 setText("");
                 setBackground(Color.LIGHT_GRAY);
@@ -167,25 +169,36 @@ public class Minesweeper extends JFrame {
 
         public void toggleFlag() {
             if (isRevealed) return;
-            if (!isFlagged && flagsPlaced >= MINES) return;
+            if (!isFlagged && flagsPlaced >= MINES){
+            //status label or whatever display: too many flags/more flags than mines
+            return;}
+
             isFlagged = !isFlagged;
-            setText(isFlagged ? "🚩" : "");
-            flagsPlaced += isFlagged ? 1 : -1;
+
+            if (isFlagged) {
+                setText("🚩");
+                flagsPlaced += 1;
+            }
+            else {
+                setText("");
+                flagsPlaced -= 1;
+            }
+
             statusLabel.setText("Muselmänner: " + (MINES - flagsPlaced));
         }
 
         private Color getColorForNumber(int n) {
-            switch (n) {
-                case 1: return Color.BLUE;
-                case 2: return new Color(0,128,0);
-                case 3: return Color.RED;
-                case 4: return new Color(0,0,128);
-                case 5: return new Color(128,0,0);
-                case 6: return new Color(64,224,208);
-                case 7: return Color.BLACK;
-                case 8: return Color.GRAY;
-                default: return Color.BLACK;
-            }
+            return switch (n) {
+                case 1 -> new Color(255, 0, 0);
+                case 2 -> new Color(224, 0, 0);
+                case 3 -> new Color(192, 0, 0);
+                case 4 -> new Color(160, 0, 0);
+                case 5 -> new Color(128, 0, 0);
+                case 6 -> new Color(96, 0, 0);
+                case 7 -> new Color(64, 0, 0);
+                case 8 -> new Color(32, 0, 0);
+                default -> Color.BLACK;
+            };
         }
     }
 
