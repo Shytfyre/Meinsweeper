@@ -25,6 +25,10 @@ public class Minesweeper extends JFrame {
         statusLabel = new JLabel("Muselmänner: " + MINES);
         add(statusLabel, BorderLayout.NORTH);
 
+        //timer
+        //score
+        //ability tracker (points) + power-up UI (secondary panel, vertical label/sidebar??)
+
         boardPanel = new JPanel(new GridLayout(ROWS, COLS));
         for (int r = 0; r < ROWS; r++) {
             for (int c = 0; c < COLS; c++) {
@@ -115,7 +119,8 @@ public class Minesweeper extends JFrame {
     }
 
     private class Tile extends JButton {
-        int row, col;
+        int row;
+        int col;
         boolean isMine = false;
         boolean isRevealed = false;
         boolean isFlagged = false;
@@ -142,7 +147,7 @@ public class Minesweeper extends JFrame {
                             firstClick = false;
                         }
                         if (!isRevealed) {
-                            revealTile(row, col); // Correctly uses the outer method
+                            revealTile(row, col);
                         }
                     }
                 }
@@ -159,7 +164,7 @@ public class Minesweeper extends JFrame {
             } else if (adjacentMines > 0) {
                 setText(Integer.toString(adjacentMines));
                 setForeground(getColorForNumber(adjacentMines));
-                //setDisabledTextColor(Color.RED);
+                //setDisabledTextColor(Color.RED);        debugging
 
             } else {
                 setText("");
@@ -170,8 +175,9 @@ public class Minesweeper extends JFrame {
         public void toggleFlag() {
             if (isRevealed) return;
             if (!isFlagged && flagsPlaced >= MINES){
-            //status label or whatever display: too many flags/more flags than mines
-            return;}
+            //QOL: status label/panel swap or whatever display: too many flags/more flags than mines
+            return;
+            }
 
             isFlagged = !isFlagged;
 
@@ -187,6 +193,7 @@ public class Minesweeper extends JFrame {
             statusLabel.setText("Muselmänner: " + (MINES - flagsPlaced));
         }
 
+        //red gradients to show increasing danger, can be changed to rbg or whatever, also maybe HexCode colors ?
         private Color getColorForNumber(int n) {
             return switch (n) {
                 case 1 -> new Color(255, 0, 0);
