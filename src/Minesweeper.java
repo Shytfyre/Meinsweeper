@@ -157,6 +157,9 @@ public class Minesweeper extends JFrame {
         public void reveal() {
             if (isRevealed) return;
             isRevealed = true;
+            //setEnabled should be set to false but for the life of me I cannot get it work displaying the right colors
+            //while its set to false.
+            //being able to interact with revealed tiles is bad but being blind to color is worse so well make do for now
             setEnabled(true);
             if (isMine) {
                 setText("💣");
