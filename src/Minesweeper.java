@@ -213,3 +213,18 @@ public class Minesweeper extends JFrame {
         SwingUtilities.invokeLater(Minesweeper::new);
     }
 }
+
+
+//should amount to the same thing, creating "Minesweeper" in the Swing Thread without externally calling on it in main
+//this might be better if we want to add more logic to the run method
+//public static void main(String[] args) {
+//    SwingUtilities.invokeLater() = (new Runnable() {
+//        public void run() {
+//            new Minesweeper();
+//        }
+//    });
+//}
+
+//maybe even a complete implementation of the Runnable on class level would make sense
+//instead of created a helper object in the Runnable we could implement Runnable from the start and separate UI and
+//game features to free the Thread and keep the functionalities safe by separation
